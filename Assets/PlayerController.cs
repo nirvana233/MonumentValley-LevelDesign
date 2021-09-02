@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
                     blend = transform.position.y - clickedCube.position.y > 0 ? -1 : 1;
 
+                    //点击特效
                     indicator.position = mouseHit.transform.GetComponent<Walkable>().GetWalkPoint();
                     Sequence s = DOTween.Sequence();
                     s.AppendCallback(() => indicator.GetComponentInChildren<ParticleSystem>().Play());
@@ -180,7 +181,7 @@ public class PlayerController : MonoBehaviour
             if (playerHit.transform.GetComponent<Walkable>() != null)
             {
                 currentCube = playerHit.transform;
-
+                //Player动画Blend,用dotween慢慢变化
                 if (playerHit.transform.GetComponent<Walkable>().isStair)
                 {
                     DOVirtual.Float(GetBlend(), blend, .1f, SetBlend);
