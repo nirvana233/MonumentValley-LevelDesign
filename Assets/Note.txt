@@ -4,4 +4,17 @@
 2.dotween DOVirtual.Float 接口，可以实现update的效果
 3.Blend Tree动画混合，玩家上下坡时动画混合
 4.向下的射线检测判断当前踩着的物体
-5.点击特效里的材质用DoColor实现动画
+5.点击特效用粒子和材质DoColor实现动画
+6.OnDrawGizmos （Gizmos.DrawSphere）（DrawLine）绘制编辑器辅助线
+7.每个cude设置好自己可以走到的cube的list
+8.寻路：找到和自己关联的点，设置他们的上一个点为当前的这个点
+9.同时关联的点接下来做同样的逻辑，即设置previousBlock. (
+10.关联的点加到nextCubes，递归执行了
+11.找过了的点全部加到visitedCubes，不要重复执行了
+12.直到找到target，或者找完
+13.以上逻辑执行完后就可以找到一条到达目的地的路径
+14.然后根据这些路径点，用DOTween.Sequence做动画（Sequence.Append, Sequence.Join, Sequence.AppendCallback）
+15.dontRotate：玩家是否朝向目标点（视觉闭合那里不要朝向目标）
+16.GameManager里配置是否这个点是激活的（某个点possiblePaths里的某个位置的path，需要满足的条件都满足）
+
+
