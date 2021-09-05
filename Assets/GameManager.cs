@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public Button rotate1;
+    public Button rotate2;
 
     public PlayerController player;
     public List<PathCondition> pathConditions = new List<PathCondition>();
@@ -17,11 +21,27 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        rotate1.onClick.AddListener(() =>
+        {
+            Rotate(1);
+        });
+        rotate2.onClick.AddListener(() =>
+        {
+            Rotate(-1);
+        });
+    }
+
+    private void Rotate(int dir)
+    {
+        int multiplier = dir;
+        pivots[0].DOComplete();
+        pivots[0].DORotate(new Vector3(0, 90 * multiplier, 0), .6f, RotateMode.WorldAxisAdd).SetEase(Ease.OutBack);
     }
 
     void Update()
     {
-        foreach(PathCondition pc in pathConditions)
+        foreach (PathCondition pc in pathConditions)
         {
             int count = 0;
             for (int i = 0; i < pc.conditions.Count; i++)
@@ -31,7 +51,7 @@ public class GameManager : MonoBehaviour
                     count++;
                 }
             }
-            foreach(SinglePath sp in pc.paths)
+            foreach (SinglePath sp in pc.paths)
                 sp.block.possiblePaths[sp.index].active = (count == pc.conditions.Count);
         }
 
@@ -45,7 +65,7 @@ public class GameManager : MonoBehaviour
             pivots[0].DORotate(new Vector3(0, 90 * multiplier, 0), .6f, RotateMode.WorldAxisAdd).SetEase(Ease.OutBack);
         }
 
-        foreach(Transform t in objectsToHide)
+        foreach (Transform t in objectsToHide)
         {
             t.gameObject.SetActive(pivots[0].eulerAngles.y > 45 && pivots[0].eulerAngles.y < 90 + 45);
         }
